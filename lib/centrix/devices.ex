@@ -6,7 +6,7 @@ defmodule Centrix.Devices do
   import Ecto.Query, warn: false
   alias Centrix.Repo
 
-  alias Centrix.Devices.{Consumption, Sensor, Device}
+  alias Centrix.Devices.{Consumption, Sensor, Device, Category}
 
   def list_devices(preloads \\ []) do
     Device
@@ -102,8 +102,6 @@ defmodule Centrix.Devices do
     |> Repo.insert()
   end
 
-  alias Centrix.Devices.Category
-
   @doc """
   Returns the list of categories.
 
@@ -118,6 +116,14 @@ defmodule Centrix.Devices do
     |> preload(^preloads)
     |> Repo.all()
   end
+
+  def list_user_categories(user, preloads \\ []) do
+    Category
+    |> where(user_id: ^user.id)
+    |> preload(^preloads)
+    |> Repo.all()
+  end
+
 
   @doc """
   Gets a single category.

@@ -12,7 +12,6 @@ defmodule Centrix.Guardian do
   Get `User` representation as string - JWT subject
   """
   def subject_for_token(%User{id: id}, _claims) do
-    IO.inspect 11111
     {:ok, Base.encode64("user:#{id}")}
   end
 
@@ -20,7 +19,6 @@ defmodule Centrix.Guardian do
   Get `User` struct from its string form - JWT subject
   """
   def resource_from_claims(%{"sub" => subject}) do
-    IO.inspect 222222
     with {:ok, "user:" <> id} <- Base.decode64(subject),
          %User{} = user <- Accounts.get_user!(id) do
       {:ok, user}

@@ -15,6 +15,10 @@ defmodule CentrixWeb.ConnCase do
   this option is not recommended for other databases.
   """
 
+  defmodule TokenEndpoint do
+    def config(:secret_key_base), do: "abc123"
+  end
+
   use ExUnit.CaseTemplate
 
   using do
@@ -23,11 +27,29 @@ defmodule CentrixWeb.ConnCase do
       import Plug.Conn
       import Phoenix.ConnTest
       import CentrixWeb.ConnCase
+      import Centrix.Factory
 
       alias CentrixWeb.Router.Helpers, as: Routes
 
       # The default endpoint for testing
       @endpoint CentrixWeb.Endpoint
+
+      def login(conn, user) do
+        {:ok, token, _} = Centrix.Guardian.encode_and_sign(user)
+        conn
+        |> Plug.Conn.put_private(:phoenix_endpoint, TokenEndpoint)
+        |> Plug.Conn.assign(:current_user, user)
+        |> put_req_header("authorization", "Bearer #{token}")
+      end
+
+      def login(conn) do
+        user = insert(:user)
+        {:ok, token, _} = Centrix.Guardian.encode_and_sign(user)
+        conn
+        |> Plug.Conn.put_private(:phoenix_endpoint, TokenEndpoint)
+        |> Plug.Conn.assign(:current_user, user)
+        |> put_req_header("authorization", "Bearer #{token}")
+      end
     end
   end
 

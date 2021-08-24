@@ -3,12 +3,14 @@ defmodule CentrixWeb.Api.V1.CategoryController do
   alias Centrix.Devices
 
   def index(conn, _params) do
-    categories = Devices.list_categories([:devices])
+    %{private: %{guardian_default_resource: current_user}} = conn
+    categories = Devices.list_user_categories(current_user, [:devices])
     render(conn, "list.json", categories: categories)
   end
 
   def create(conn, %{"category" => category_params}) do
     %{private: %{guardian_default_resource: current_user}} = conn
+    IO.inspect current_user.id
 
     with category_params <- Map.put(category_params, "user_id", current_user.id),
          {:ok, category} <- Devices.create_category(category_params),
