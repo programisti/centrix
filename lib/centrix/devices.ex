@@ -80,7 +80,7 @@ defmodule Centrix.Devices do
 
   def is_valid_datetime?(datetime) do
     case DateTime.from_iso8601(datetime) do
-      {:ok, datetime, 0} ->
+      {:ok, _datetime, 0} ->
         true
 
       _ ->
@@ -91,6 +91,7 @@ defmodule Centrix.Devices do
 
   defp parse_datetime(datetime) do
     {:ok, datetime, 0} = DateTime.from_iso8601(datetime)
+    datetime
   end
 
   def list_consumptions_for_device(device_id, days) do
