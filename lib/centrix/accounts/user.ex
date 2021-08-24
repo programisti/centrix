@@ -1,0 +1,20 @@
+defmodule Centrix.Accounts.User do
+  use Ecto.Schema
+  import Ecto.Changeset
+
+  schema "users" do
+    field :email, :string
+    field :name, :string
+    field :encrypted_password, :string
+
+    timestamps()
+  end
+
+  @doc false
+  def changeset(user, attrs) do
+    user
+    |> cast(attrs, [:email, :encrypted_password, :name])
+    |> validate_required([:email, :encrypted_password, :name])
+    |> unique_constraint(:email)
+  end
+end
