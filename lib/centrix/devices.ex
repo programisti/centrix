@@ -105,6 +105,12 @@ defmodule Centrix.Devices do
     |> update_sensor(%{is_on: true})
   end
 
+  def is_sensor_owner?(user, sensor_id) do
+    sensor = get_sensor!(sensor_id)
+    device = get_device!(sensor.device_id)
+    user.id == device.user_id
+  end
+
   def turn_sensor_off(sensor_id) do
     sensor_id
     |> get_sensor!()
@@ -223,5 +229,11 @@ defmodule Centrix.Devices do
 
   def list_sensors() do
     Repo.all(Sensor)
+  end
+
+  def list_sensors_for_device(device_id) do
+    Sensor
+    |> where(device_id: ^device_id)
+    |> Repo.all()
   end
 end

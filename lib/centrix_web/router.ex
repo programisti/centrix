@@ -43,8 +43,8 @@ defmodule CentrixWeb.Router do
 
     resources "/consumptions", ConsumptionController, only: [:index]
 
-    get "/sensors/turn_on", SensorController, :turn_on
-    get "/sensors/turn_off", SensorController, :turn_off
+    get "/sensors/:sensor_id/turn_on", SensorController, :turn_on
+    get "/sensors/:sensor_id/turn_off", SensorController, :turn_off
   end
 
 

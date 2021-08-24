@@ -2,6 +2,8 @@ defmodule CentrixWeb.Api.V1.CategoryController do
   use CentrixWeb, :controller
   alias Centrix.Devices
 
+  action_fallback(CentrixWeb.FallbackController)
+
   def index(conn, _params) do
     %{private: %{guardian_default_resource: current_user}} = conn
     categories = Devices.list_user_categories(current_user, [:devices])

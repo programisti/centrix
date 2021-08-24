@@ -11,7 +11,6 @@ defmodule CentrixWeb.Api.V1.SessionController do
     with hash <- Argon2.hash_pwd_salt(params["password"]),
          attrs <- Map.put(params, "encrypted_password", hash),
          {:ok, user} <- Accounts.create_user(attrs),
-         _ <- IO.inspect(user),
          token <- Guardian.encode_and_sign(user) do
       render(conn, "token.json", user: user, token: token)
     end

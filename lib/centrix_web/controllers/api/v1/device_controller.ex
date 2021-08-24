@@ -2,6 +2,8 @@ defmodule CentrixWeb.Api.V1.DeviceController do
   use CentrixWeb, :controller
   alias Centrix.Devices
 
+  action_fallback(CentrixWeb.FallbackController)
+
   def index(conn, %{"category_id" => category_id}) do
     %{private: %{guardian_default_resource: current_user}} = conn
     devices = Devices.list_users_category_devices(current_user, category_id, [:sensors, :user])
