@@ -3,7 +3,7 @@ defmodule Centrix.Factory do
   use ExMachina.Ecto, repo: Centrix.Repo
 
   alias Centrix.Accounts.User
-  alias Centrix.Devices.{Device, Category, Sensor}
+  alias Centrix.Devices.{Device, Category, Sensor, Consumption}
 
   def user_factory do
     %User{
@@ -31,6 +31,13 @@ defmodule Centrix.Factory do
   def sensor_factory do
     %Sensor{
       name: "Kitchen thermometer sensor",
+      device_id: insert(:device).id
+    }
+  end
+
+  def consumption_factory do
+    %Consumption{
+      watt: 35,
       device_id: insert(:device).id
     }
   end

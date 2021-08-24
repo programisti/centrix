@@ -42,10 +42,9 @@ defmodule CentrixWeb.Router do
     resources "/categories", CategoryController, only: [:index, :create] do
       resources "/devices", DeviceController, only: [:index, :create] do
         resources "/sensors", SensorController, only: [:create, :index]
+        resources "/consumptions", ConsumptionController, only: [:index]
       end
     end
-
-    resources "/consumptions", ConsumptionController, only: [:index]
 
     get "/sensors/:sensor_id/turn_on", SensorController, :turn_on
     get "/sensors/:sensor_id/turn_off", SensorController, :turn_off

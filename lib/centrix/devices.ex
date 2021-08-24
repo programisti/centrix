@@ -55,6 +55,44 @@ defmodule Centrix.Devices do
     Repo.all(Consumption)
   end
 
+  def list_device_consumption(device_id, %{"start_date" => start_date}) do
+    Consumption
+    |> where(device_id: ^device_id)
+    |> where([c], c.inserted_at >= ^parse_datetime(start_date))
+    |> Repo.all()
+  end
+
+  def list_device_consumption(device_id, %{"start_date" => start_date, "end_date" => end_date}) do
+    if is_valid_datetime?(start_date) && is_valid_datetime?(end_date) do
+      Consumption
+      |> where(device_id: ^device_id)
+      |> where([c], c.inserted_at >= ^parse_datetime(start_date))
+      |> where([c], c.inserted_at <= ^parse_datetime(end_date))
+      |> Repo.all()
+    end
+  end
+
+  def list_device_consumption(device_id, _params) do
+    Consumption
+    |> where(device_id: ^device_id)
+    |> Repo.all()
+  end
+
+  def is_valid_datetime?(datetime) do
+    case DateTime.from_iso8601(datetime) do
+      {:ok, datetime, 0} ->
+        true
+
+      _ ->
+        raise "Date time is not valid"
+        false
+    end
+  end
+
+  defp parse_datetime(datetime) do
+    {:ok, datetime, 0} = DateTime.from_iso8601(datetime)
+  end
+
   def list_consumptions_for_device(device_id, days) do
     last_date = DateTime.add(DateTime.utc_now(), days, :days)
 
@@ -110,6 +148,21 @@ defmodule Centrix.Devices do
     sensor = get_sensor!(sensor_id)
     device = get_device!(sensor.device_id)
     user.id == device.user_id
+  end
+
+  def is_device_owner?(user, device_id) do
+    device = get_device!(device_id)
+    user.id == device.user_id
+  end
+
+  def is_device_owner!(user, device_id) do
+    device = get_device!(device_id)
+
+    if user.id == device.user_id do
+      :ok
+    else
+      {:error, "Not a device owner"}
+    end
   end
 
   def turn_sensor_off(sensor_id) do
