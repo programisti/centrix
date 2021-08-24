@@ -9,6 +9,5 @@ defmodule Centrix.Repo.Migrations.CreateConsumptions do
 
       timestamps()
     end
-
   end
 end

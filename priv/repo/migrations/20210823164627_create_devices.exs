@@ -11,6 +11,5 @@ defmodule Centrix.Repo.Migrations.CreateDevices do
 
       timestamps()
     end
-
   end
 end

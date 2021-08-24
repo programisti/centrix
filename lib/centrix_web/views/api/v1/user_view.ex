@@ -12,5 +12,4 @@ defmodule CentrixWeb.Api.V1.UserView do
       email: user.email
     }
   end
-
 end

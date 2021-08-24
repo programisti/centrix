@@ -8,6 +8,5 @@ defmodule Centrix.Repo.Migrations.CreateCategories do
       add :user_id, references(:users)
       timestamps()
     end
-
   end
 end

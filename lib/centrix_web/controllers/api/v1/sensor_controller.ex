@@ -11,7 +11,9 @@ defmodule CentrixWeb.Api.V1.SensorController do
   def turn_on(conn, %{"sensor_id" => sensor_id}) do
     %{private: %{guardian_default_resource: current_user}} = conn
 
-    with true <- Devices.is_sensor_owner?(current_user, sensor_id) || {:error, "User is not sensor owner"},
+    with true <-
+           Devices.is_sensor_owner?(current_user, sensor_id) ||
+             {:error, "User is not sensor owner"},
          {:ok, sensor} <- Devices.turn_sensor_on(sensor_id) do
       render(conn, "sensor.json", sensor: sensor)
     end
@@ -20,7 +22,9 @@ defmodule CentrixWeb.Api.V1.SensorController do
   def turn_off(conn, %{"sensor_id" => sensor_id}) do
     %{private: %{guardian_default_resource: current_user}} = conn
 
-    with true <- Devices.is_sensor_owner?(current_user, sensor_id) || {:error, "User is not sensor owner"},
+    with true <-
+           Devices.is_sensor_owner?(current_user, sensor_id) ||
+             {:error, "User is not sensor owner"},
          {:ok, sensor} <- Devices.turn_sensor_off(sensor_id) do
       render(conn, "sensor.json", sensor: sensor)
     end

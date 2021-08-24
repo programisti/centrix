@@ -1,8 +1,7 @@
 defmodule CentrixWeb.Api.V1.SessionView do
   use CentrixWeb, :view
 
-  def render("token.json", %{user: _user, token: {:error, error}}) do
-    IO.inspect error
+  def render("token.json", %{user: _user, token: {:error, _error}}) do
     %{
       status: :error,
       message: "Unknown error duraing authentication"

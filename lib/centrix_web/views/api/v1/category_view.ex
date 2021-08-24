@@ -14,5 +14,4 @@ defmodule CentrixWeb.Api.V1.CategoryView do
       devices: render_many(category.devices, DeviceView, "device.json")
     }
   end
-
 end

@@ -36,6 +36,7 @@ defmodule CentrixWeb.ConnCase do
 
       def login(conn, user) do
         {:ok, token, _} = Centrix.Guardian.encode_and_sign(user)
+
         conn
         |> Plug.Conn.put_private(:phoenix_endpoint, TokenEndpoint)
         |> Plug.Conn.assign(:current_user, user)
@@ -45,6 +46,7 @@ defmodule CentrixWeb.ConnCase do
       def login(conn) do
         user = insert(:user)
         {:ok, token, _} = Centrix.Guardian.encode_and_sign(user)
+
         conn
         |> Plug.Conn.put_private(:phoenix_endpoint, TokenEndpoint)
         |> Plug.Conn.assign(:current_user, user)

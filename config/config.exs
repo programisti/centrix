@@ -31,7 +31,6 @@ config :centrix, Centrix.Guardian,
   verify_issuer: true,
   secret_key: "oxCxbtL4KOxoJGvK2AA9nsGirv0YDZSmfsE9vHM1p2JwUm/KP2jhtS8NXuogw8QX"
 
-
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

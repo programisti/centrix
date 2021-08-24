@@ -14,5 +14,4 @@ defmodule CentrixWeb.Api.V1.DeviceView do
       sensors: render_many(device.sensors, SensorView, "comment.json")
     }
   end
-
 end

@@ -11,10 +11,10 @@ defmodule CentrixWeb.SessionControllerTest do
     test "registers user", %{conn: conn} do
       conn
       |> post(Routes.session_path(conn, :create), %{
-          name: "somename",
-          email: "email@example.com",
-          password: "password",
-        })
+        name: "somename",
+        email: "email@example.com",
+        password: "password"
+      })
       |> json_response(200)
 
       users = Accounts.list_users()
@@ -38,9 +38,9 @@ defmodule CentrixWeb.SessionControllerTest do
         conn
         |> login(user)
         |> post(Routes.session_path(conn, :login), %{
-            email: user.email,
-            password: "password"
-          })
+          email: user.email,
+          password: "password"
+        })
         |> json_response(200)
 
       assert data["name"] == user.name

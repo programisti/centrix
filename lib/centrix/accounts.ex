@@ -102,7 +102,6 @@ defmodule Centrix.Accounts do
     User.changeset(user, attrs)
   end
 
-
   def authenticate(email, plain_text_password) do
     User
     |> where(email: ^email)

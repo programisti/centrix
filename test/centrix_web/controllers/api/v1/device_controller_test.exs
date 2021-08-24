@@ -52,10 +52,10 @@ defmodule CentrixWeb.Api.V1.DeviceControllerTest do
       conn
       |> login(user)
       |> post(Routes.category_device_path(conn, :index, category.id), %{
-          device: %{
-            name: "Thermometer"
-          }
-        })
+        device: %{
+          name: "Thermometer"
+        }
+      })
       |> json_response(200)
 
       devices = Devices.list_devices()

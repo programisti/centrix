@@ -57,6 +57,7 @@ defmodule Centrix.Devices do
 
   def list_consumptions_for_device(device_id, days) do
     last_date = DateTime.add(DateTime.utc_now(), days, :days)
+
     Consumption
     |> where(device_id: ^device_id)
     |> where([i], i.inserted_at >= ^last_date)
@@ -144,7 +145,6 @@ defmodule Centrix.Devices do
     |> preload(^preloads)
     |> Repo.all()
   end
-
 
   @doc """
   Gets a single category.

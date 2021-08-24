@@ -18,11 +18,15 @@ defmodule CentrixWeb.Router do
   end
 
   pipeline :ensure_auth do
-    plug Guardian.Plug.EnsureAuthenticated, error_handler: Centrix.ErrorHandler, module: Centrix.Guardian
+    plug Guardian.Plug.EnsureAuthenticated,
+      error_handler: Centrix.ErrorHandler,
+      module: Centrix.Guardian
   end
 
   pipeline :ensure_not_auth do
-    plug Guardian.Plug.EnsureNotAuthenticated, error_handler: Centrix.ErrorHandler, module: Centrix.Guardian
+    plug Guardian.Plug.EnsureNotAuthenticated,
+      error_handler: Centrix.ErrorHandler,
+      module: Centrix.Guardian
   end
 
   scope "/api/auth", CentrixWeb.Api.V1 do
@@ -46,7 +50,6 @@ defmodule CentrixWeb.Router do
     get "/sensors/:sensor_id/turn_on", SensorController, :turn_on
     get "/sensors/:sensor_id/turn_off", SensorController, :turn_off
   end
-
 
   # Enables LiveDashboard only for development
   #

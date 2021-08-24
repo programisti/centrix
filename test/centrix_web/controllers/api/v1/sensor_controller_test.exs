@@ -41,7 +41,9 @@ defmodule CentrixWeb.Api.V1.SensorControllerTest do
       data =
         conn
         |> login(user2)
-        |> get(Routes.category_device_sensor_path(conn, :index, category_user2.id, device_user2.id))
+        |> get(
+          Routes.category_device_sensor_path(conn, :index, category_user2.id, device_user2.id)
+        )
         |> json_response(200)
 
       assert [%{"name" => "For User2"}] = data
@@ -75,9 +77,9 @@ defmodule CentrixWeb.Api.V1.SensorControllerTest do
         |> json_response(200)
 
       assert %{
-          "errors" => [%{"field" => "turn_on", "message" => "User is not sensor owner"}],
-          "status" => "error"
-        } = data
+               "errors" => [%{"field" => "turn_on", "message" => "User is not sensor owner"}],
+               "status" => "error"
+             } = data
 
       sensor = Devices.get_sensor!(sensor.id)
 
