@@ -1,6 +1,6 @@
 defmodule CentrixWeb.Api.V1.CategoryControllerTest do
   use CentrixWeb.ConnCase
-  alias Centrix.Accounts
+  alias Centrix.Devices
 
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
@@ -27,7 +27,7 @@ defmodule CentrixWeb.Api.V1.CategoryControllerTest do
       user1 = insert(:user)
       user2 = insert(:user)
 
-      category = insert(:category, %{name: "Kitten", user_id: user1.id})
+      insert(:category, %{name: "Kitten", user_id: user1.id})
 
       data =
         conn
@@ -36,6 +36,26 @@ defmodule CentrixWeb.Api.V1.CategoryControllerTest do
         |> json_response(200)
 
       assert data == []
+    end
+  end
+
+  describe "create" do
+    test "creates category", %{conn: conn} do
+      user = insert(:user)
+
+      conn
+      |> login(user)
+      |> post(Routes.category_path(conn, :create), %{
+          category: %{
+            user_id: user.id,
+            name: "Kitten"
+          }
+        })
+      |> json_response(200)
+
+      categories = Devices.list_categories()
+      assert Enum.count(Devices.list_categories()) > 0
+      assert List.last(categories).name == "Kitten"
     end
   end
 end

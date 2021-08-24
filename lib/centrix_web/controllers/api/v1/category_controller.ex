@@ -10,7 +10,6 @@ defmodule CentrixWeb.Api.V1.CategoryController do
 
   def create(conn, %{"category" => category_params}) do
     %{private: %{guardian_default_resource: current_user}} = conn
-    IO.inspect current_user.id
 
     with category_params <- Map.put(category_params, "user_id", current_user.id),
          {:ok, category} <- Devices.create_category(category_params),
