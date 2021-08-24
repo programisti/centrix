@@ -14,6 +14,21 @@ defmodule Centrix.Devices do
     |> Repo.all()
   end
 
+  def list_category_devices(category_id, preloads \\ []) do
+    Device
+    |> preload(^preloads)
+    |> where(category_id: ^category_id)
+    |> Repo.all()
+  end
+
+  def list_users_category_devices(user, category_id, preloads \\ []) do
+    Device
+    |> preload(^preloads)
+    |> where(category_id: ^category_id)
+    |> where(user_id: ^user.id)
+    |> Repo.all()
+  end
+
   def get_device!(id), do: Repo.get!(Device, id)
 
   def create_device(attrs \\ %{}) do

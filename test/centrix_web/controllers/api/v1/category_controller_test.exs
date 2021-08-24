@@ -46,10 +46,7 @@ defmodule CentrixWeb.Api.V1.CategoryControllerTest do
       conn
       |> login(user)
       |> post(Routes.category_path(conn, :create), %{
-          category: %{
-            user_id: user.id,
-            name: "Kitten"
-          }
+          category: %{ name: "Kitten" }
         })
       |> json_response(200)
 
